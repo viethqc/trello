@@ -16,6 +16,15 @@ func TestGetOrganization(t *testing.T) {
 	}
 }
 
+func TestCreateOrganization(t *testing.T) {
+	client := testClient()
+	// client.BaseURL = mockResponse("organizations", "culturefoundry.json").URL
+	err := client.CreateOrganization(&Organization{DisplayName: "1", Name: "2"}, Defaults())
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestOrganizationSetClient(t *testing.T) {
 	o := Organization{}
 	client := testClient()
@@ -27,10 +36,12 @@ func TestOrganizationSetClient(t *testing.T) {
 
 func testOrganization(t *testing.T) *Organization {
 	client := testClient()
-	client.BaseURL = mockResponse("organizations", "culturefoundry.json").URL
-	organization, err := client.GetOrganization("culturefoundry", Defaults())
+	// client.BaseURL = mockResponse("organizations", "culturefoundry.json").URL
+	organization, err := client.GetOrganization("5f19949edb414362a6ebd013", Defaults())
 	if err != nil {
 		t.Fatal(err)
 	}
 	return organization
 }
+
+

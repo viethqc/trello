@@ -67,7 +67,7 @@ func (t *mockTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 func testClient() *Client {
-	c := NewClient("user", "pass")
+	c := NewClient("test", "test")
 	c.testMode = true
 	return c
 }

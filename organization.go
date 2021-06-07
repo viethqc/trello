@@ -35,6 +35,26 @@ func (c *Client) GetOrganization(orgID string, extraArgs ...Arguments) (organiza
 	return
 }
 
+// GetOrganization takes an organization id and Arguments and either
+// GETs returns an Organization, or an error.
+func (c *Client) CreateOrganization(org *Organization, extraArgs ...Arguments) error {
+	path := "organizations"
+	args := Arguments{
+		"name":      org.Name,
+		"displayName":      org.DisplayName,
+		"desc":       org.Desc,
+		"url":    org.URL,
+		"website": org.Website,
+	}
+
+	args.flatten(extraArgs)
+	err := c.Post(path, args, &org)
+	if err == nil {
+		org.SetClient(c)
+	}
+	return err
+}
+
 // SetClient can be used to override this Organization's internal connection
 // to the Trello API. Normally, this is set automatically after API calls.
 func (o *Organization) SetClient(newClient *Client) {
